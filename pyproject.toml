@@ -10,4 +10,4 @@ dependencies = [
 ]
 
 [project.scripts]
-task-cli = "main:main"
+task-cli = "tasktracker.cli:main"
