@@ -13,7 +13,7 @@ def handle_action(args: Namespace) -> None:
         case Command.LIST:
             _list(args.status)
         case Command.UPDATE:
-            raise NotImplementedError()
+            _update(args.id, args.new_title)
         case Command.DELETE:
             raise NotImplementedError()
         case Command.MARK_IN_PROGRESS:
@@ -73,7 +73,7 @@ def _add(task_name: str) -> None:
 def _list(status: Status | None) -> None:
     data = _load_file()
     if status:
-        tasks = [task for task in data["tasks"] if task["status"] == status]
+        tasks = [t for t in data["tasks"] if t["status"] == status]
     else:
         tasks = data["tasks"]
     
@@ -83,3 +83,13 @@ def _list(status: Status | None) -> None:
         print(f"Name: {task["description"]}")
         print(f"Status: {task["status"]}")
         print("-"*50)
+
+
+def _update(id: int, new_title: str) -> None:
+    data = _load_file()
+    task = next((t for t in data["tasks"] if t["id"] == id), None)
+    if task:
+        task["description"] = new_title
+        _save_file(data)
+
+        print("Task updated with success")

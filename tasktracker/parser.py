@@ -12,7 +12,8 @@ def build_parser() -> ArgumentParser:
     
     add_parser = subparsers.add_parser("add")
     add_parser.add_argument(
-        "title"
+        "title",
+        type=str
     )
     
     list_parser = subparsers.add_parser("list")
@@ -23,6 +24,9 @@ def build_parser() -> ArgumentParser:
         choices=list(Status),
     )
 
+    update_parser = subparsers.add_parser("update")
+    update_parser.add_argument("id", type=int)
+    update_parser.add_argument("new_title", type=str)
 
     return parser
 
