@@ -21,6 +21,15 @@ class Status(str, Enum):
 class Task:
     id: int
     description: str
-    createdAt: datetime
-    updatedAt: datetime
+    created_at: datetime
+    updated_at: datetime
     status: Status = Status.TODO
+
+    def to_dict(self) -> dict:
+        return {
+            "id": self.id,
+            "description": self.description,
+            "createdAt": self.created_at.isoformat(),
+            "updatedAt": self.updated_at.isoformat(),
+            "status": self.status.value
+        }
