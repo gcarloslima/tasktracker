@@ -1,5 +1,7 @@
 from argparse import ArgumentParser
 
+from tasktracker.schema import Status
+
 
 def build_parser() -> ArgumentParser:
     parser = ArgumentParser(
@@ -7,8 +9,20 @@ def build_parser() -> ArgumentParser:
     )
 
     subparsers = parser.add_subparsers(dest="command")
+    
     add_parser = subparsers.add_parser("add")
-    add_parser.add_argument("title")
+    add_parser.add_argument(
+        "title"
+    )
+    
+    list_parser = subparsers.add_parser("list")
+    list_parser.add_argument(
+        "status",
+        nargs="?",
+        type=Status,
+        choices=list(Status),
+    )
+
 
     return parser
 

@@ -1,16 +1,17 @@
-from tasktracker.schema import Command, Task
+from argparse import Namespace
+from tasktracker.schema import Command, Status, Task
 from datetime import datetime
 import json
 import os
 from pathlib import Path
 
 
-def handle_action(command: Command, argument: str) -> None:
-    match(command):
+def handle_action(args: Namespace) -> None:
+    match(args.command):
         case Command.ADD:
-            _add(argument)
+            _add(args.title)
         case Command.LIST:
-            raise NotImplementedError()
+            _list(args.status)
         case Command.UPDATE:
             raise NotImplementedError()
         case Command.DELETE:
@@ -29,7 +30,6 @@ def _load_file() -> dict:
     path = _get_file_path()
 
     if path.exists():
-        print(f"Loading data from {path}")
         with path.open("r", encoding="utf-8") as f:
             return json.load(f)
         
@@ -70,3 +70,16 @@ def _add(task_name: str) -> None:
     print(f"Task added successfully: (ID: {new_task.id})")
 
 
+def _list(status: Status | None) -> None:
+    data = _load_file()
+    if status:
+        tasks = [task for task in data["tasks"] if task["status"] == status]
+    else:
+        tasks = data["tasks"]
+    
+    for task in tasks:
+        print("-"*50)
+        print(f"Task #{task["id"]}")
+        print(f"Name: {task["description"]}")
+        print(f"Status: {task["status"]}")
+        print("-"*50)
