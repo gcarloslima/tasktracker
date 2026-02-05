@@ -28,5 +28,8 @@ def build_parser() -> ArgumentParser:
     update_parser.add_argument("id", type=int)
     update_parser.add_argument("new_title", type=str)
 
+    delete_parser = subparsers.add_parser("delete")
+    delete_parser.add_argument("id", type=int)
+
     return parser
 

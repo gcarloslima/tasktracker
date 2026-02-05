@@ -15,7 +15,7 @@ def handle_action(args: Namespace) -> None:
         case Command.UPDATE:
             _update(args.id, args.new_title)
         case Command.DELETE:
-            raise NotImplementedError()
+            _delete(args.id)
         case Command.MARK_IN_PROGRESS:
             raise NotImplementedError()
         case Command.MARK_DONE:
@@ -33,6 +33,7 @@ def _load_file() -> dict:
         with path.open("r", encoding="utf-8") as f:
             return json.load(f)
         
+
     return { "tasks": [] }
 
 
@@ -93,3 +94,17 @@ def _update(id: int, new_title: str) -> None:
         _save_file(data)
 
         print("Task updated with success")
+
+
+def _delete(id: int) -> None:
+    data = _load_file()
+    tasks = data["tasks"]
+
+    for i, t in enumerate(tasks):
+        if t.get("id") == id:
+            tasks.pop(i)
+            _save_file(data)
+            print("Task deleted with success")
+            return
+    
+    print(f"No task with ID: {id} was found")
