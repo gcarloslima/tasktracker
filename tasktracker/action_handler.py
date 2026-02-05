@@ -19,7 +19,7 @@ def handle_action(args: Namespace) -> None:
         case Command.MARK_IN_PROGRESS:
             _mark_in_progress(args.id)
         case Command.MARK_DONE:
-            raise NotImplementedError()
+            _mark_done(args.id)
 
 
 def _get_file_path() -> Path:
@@ -118,4 +118,16 @@ def _mark_in_progress(id: int) -> None:
     if task:
         task["status"] = Status.IN_PROGRESS
         _save_file(data)
-        print("Task status updated with success")
+        print("Task status updated with success to in-progress")
+
+
+def _mark_done(id: int) -> None:
+    data = _load_file()
+    tasks = data["tasks"]
+
+    task = next((t for t in tasks if t["id"] == id), None)
+    
+    if task:
+        task["status"] = Status.DONE
+        _save_file(data)
+        print("Task status updated with success to done")

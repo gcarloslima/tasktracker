@@ -31,4 +31,7 @@ def build_parser() -> ArgumentParser:
     mark_in_progress_parser = subparsers.add_parser("mark-in-progress")
     mark_in_progress_parser.add_argument("id", type=int)
 
+    mark_done_parser = subparsers.add_parser("mark-done")
+    mark_done_parser.add_argument("id", type=int)
+
     return parser
