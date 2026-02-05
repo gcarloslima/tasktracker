@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from enum import Enum
 from datetime import datetime
 
+
 class Command(str, Enum):
     ADD = "add"
     LIST = "list"
@@ -31,5 +32,5 @@ class Task:
             "description": self.description,
             "createdAt": self.created_at.isoformat(),
             "updatedAt": self.updated_at.isoformat(),
-            "status": self.status.value
+            "status": self.status.value,
         }

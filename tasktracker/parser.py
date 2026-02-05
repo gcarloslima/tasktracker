@@ -9,13 +9,10 @@ def build_parser() -> ArgumentParser:
     )
 
     subparsers = parser.add_subparsers(dest="command")
-    
+
     add_parser = subparsers.add_parser("add")
-    add_parser.add_argument(
-        "title",
-        type=str
-    )
-    
+    add_parser.add_argument("title", type=str)
+
     list_parser = subparsers.add_parser("list")
     list_parser.add_argument(
         "status",
@@ -31,5 +28,7 @@ def build_parser() -> ArgumentParser:
     delete_parser = subparsers.add_parser("delete")
     delete_parser.add_argument("id", type=int)
 
-    return parser
+    mark_in_progress_parser = subparsers.add_parser("mark-in-progress")
+    mark_in_progress_parser.add_argument("id", type=int)
 
+    return parser
